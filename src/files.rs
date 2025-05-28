@@ -1,8 +1,16 @@
 use std::path::{Path, PathBuf};
 use crate::Error;
 
-fn all_files() -> Vec<PathBuf> {
-    todo!()
+fn all_files(dir: &Path) -> Result<Vec<PathBuf>, Error> {
+    let mut files: Vec<PathBuf> = vec![];
+
+    let mut dirs = recurse_directories(dir)?;
+    dirs.push(dir.to_owned());
+    for dir in dirs {
+        files.append(&mut dir_entries(&dir)?.files);
+    }
+
+    return Ok(files);
 }
 
 fn dir_entries(dir: &Path) -> Result<DirEntries, Error> {
@@ -43,6 +51,27 @@ fn recurse_directories_inner(p: &Path, v: &mut Vec<PathBuf>) {
 }
 
 mod tests {
+    #[test]
+    fn all_files() {
+        use crate::CWD;
+        let files = super::all_files(&CWD.join("testfs")).unwrap();
+        let comp = vec![
+            CWD.join("testfs/base.txt"),
+            CWD.join("testfs/dir1/c1.md"),
+            CWD.join("testfs/dir1/subdir1.2/c1.2.txt"),
+            CWD.join("testfs/dir2/d2.txt"),
+            CWD.join("testfs/dir2/important_content.txt"),
+            CWD.join("testfs/dir2/subdir2.1/c2.1.txt"),
+        ];
+
+        dbg!(&files);
+        dbg!(&comp);
+
+        let comps = comp.iter().map(|a| files.contains(a)).collect::<Vec<bool>>();
+
+        assert!(!comps.contains(&false))
+    }
+
     #[test]
     fn recurse_directories() {
         let testfs = crate::CWD.join("testfs/");
