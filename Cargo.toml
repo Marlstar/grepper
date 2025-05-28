@@ -1,0 +1,13 @@
+[package]
+name = "vortex"
+version = "1.0.0"
+edition = "2024"
+authors = ["Marley <marley@marlstar.com>"]
+homepage = "https://github.com/Marlstar/grepper"
+repository = "https://github.com/Marlstar/grepper"
+description = "A grep clone written in rust"
+keywords = ["grep", "find"]
+
+
+[dependencies]
+clap = { version = "4.5.39", features = ["derive"] }
