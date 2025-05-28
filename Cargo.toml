@@ -1,12 +1,12 @@
 [package]
 name = "grepper"
-version = "1.0.0-3"
+version = "1.0.0"
 edition = "2024"
 authors = ["Marley <marley@marlstar.com>"]
 homepage = "https://github.com/Marlstar/grepper"
 repository = "https://github.com/Marlstar/grepper"
 description = "A grep clone written in rust"
-keywords = ["grep", "find"]
+keywords = ["grep", "find", "search"]
 
 [package.metadata.wix]
 upgrade-guid = "08B07E83-6E2E-4B89-A262-754AF4C57FD7"
