@@ -32,7 +32,7 @@ fn recurse_directories(base: &Path) -> Result<Vec<PathBuf>, Error> {
 }
 
 fn recurse_directories_inner(p: &Path, v: &mut Vec<PathBuf>) {
-    let entries = match dir_entries(&p) {
+    let entries = match dir_entries(p) {
         Ok(a) => a.dirs,
         Err(_) => return,
     };
