@@ -1,7 +1,7 @@
-use std::path::{Path, PathBuf};
+use std::{io::Read, path::{Path, PathBuf}};
 use crate::Error;
 
-fn all_files(dir: &Path) -> Result<Vec<PathBuf>, Error> {
+pub fn all_files(dir: &Path) -> Result<Vec<PathBuf>, Error> {
     let mut files: Vec<PathBuf> = vec![];
 
     let mut dirs = recurse_directories(dir)?;
@@ -33,7 +33,7 @@ pub struct DirEntries {
     pub dirs: Vec<PathBuf>,
 }
 
-fn recurse_directories(base: &Path) -> Result<Vec<PathBuf>, Error> {
+pub fn recurse_directories(base: &Path) -> Result<Vec<PathBuf>, Error> {
     let mut dirs: Vec<PathBuf> = vec![];
     recurse_directories_inner(base, &mut dirs);
     return Ok(dirs);
@@ -48,6 +48,22 @@ fn recurse_directories_inner(p: &Path, v: &mut Vec<PathBuf>) {
         v.push(entry.clone());
         recurse_directories_inner(&entry, v);
     }
+}
+
+pub fn file_content_string(p: &Path) -> Result<String, Error> {
+    let mut file = std::fs::File::open(p)?;
+    let size = file.metadata()?.len();
+    let mut buf = String::with_capacity(size as usize);
+    file.read_to_string(&mut buf)?;
+    return Ok(buf);
+}
+
+pub fn file_content_bytes(p: &Path) -> Result<Vec<u8>, Error> {
+    let mut file = std::fs::File::open(p)?;
+    let size = file.metadata()?.len();
+    let mut buf = Vec::with_capacity(size as usize);
+    file.read_to_end(&mut buf)?;
+    return Ok(buf);
 }
 
 mod tests {
