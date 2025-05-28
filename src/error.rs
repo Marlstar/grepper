@@ -2,6 +2,7 @@
 pub enum Error {
     NotDirectory,
     NotFile,
+    NotSubdirectory,
     IO(std::io::Error),
 }
 
