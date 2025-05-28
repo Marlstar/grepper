@@ -21,6 +21,11 @@ fn dir_entries(dir: &Path) -> Result<DirEntries, Error> {
 
     for entry in dir.read_dir()? {
         let path = entry?.path();
+
+        // Check against .gitignore
+        use crate::gitignore::matches;
+        if crate::ARGS.gitignore && matches(&path) { continue; }
+
         if path.is_dir() { dirs.push(path); }
         else if path.is_file() { files.push(path); }
     }

@@ -20,4 +20,8 @@ pub struct Args {
     /// Use regular expression
     #[arg(short, default_value_t = false)]
     pub regex: bool,
+
+    /// Ignore the entries of `.gitignore` if it exists
+    #[arg(long = "no-gitignore", default_value_t = true, action = clap::ArgAction::SetFalse)]
+    pub gitignore: bool,
 }
