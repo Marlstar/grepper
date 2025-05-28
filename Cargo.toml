@@ -8,6 +8,17 @@ repository = "https://github.com/Marlstar/grepper"
 description = "A grep clone written in rust"
 keywords = ["grep", "find"]
 
+[package.metadata.wix]
+upgrade-guid = "08B07E83-6E2E-4B89-A262-754AF4C57FD7"
+path-guid = "3423E061-46AC-4B2F-A9AA-8E8F9C18CDB1"
+license = false
+eula = false
+
 
 [dependencies]
 clap = { version = "4.5.39", features = ["derive"] }
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
