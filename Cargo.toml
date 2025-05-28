@@ -1,5 +1,5 @@
 [package]
-name = "vortex"
+name = "grepper"
 version = "1.0.0"
 edition = "2024"
 authors = ["Marley <marley@marlstar.com>"]
