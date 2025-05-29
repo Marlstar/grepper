@@ -11,7 +11,6 @@ pub fn recursive_grep() -> Result<Vec<Hit>, Error> {
     for (path, file) in file_contents {
         for (i, line) in file.lines().enumerate() {
             if let Some(pos) = line.find(&crate::ARGS.query) {
-                let query_len = crate::ARGS.query.len();
                 hits.push(Hit {
                     file: path.clone(),
                     line_number: i,

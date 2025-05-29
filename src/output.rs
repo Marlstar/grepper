@@ -3,8 +3,6 @@ use crate::util::relative_path;
 use colored::Colorize;
 
 pub fn display(hits: Vec<Hit>) {
-    let hit_len = crate::ARGS.query.chars().count();
-
     for hit in hits {
         let rel_path = relative_path(&*crate::CWD, &hit.file).unwrap();
 
