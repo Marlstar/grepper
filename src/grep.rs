@@ -10,7 +10,19 @@ pub fn recursive_grep() -> Result<Vec<Hit>, Error> {
     let mut hits: Vec<Hit> = vec![];
     for (path, file) in file_contents {
         for (i, line) in file.lines().enumerate() {
-            if let Some(pos) = line.find(&crate::ARGS.query) {
+            // Invert query
+            if crate::ARGS.invert {
+                if !line.contains(&crate::ARGS.query) {
+                    hits.push(Hit {
+                        file: path.clone(),
+                        line_number: i,
+                        line_content: line.to_string(),
+                        start_byte_idx: 0,
+                    });
+                }
+            }
+            // Don't invert (behave as normal)
+            else if let Some(pos) = line.find(&crate::ARGS.query) {
                 hits.push(Hit {
                     file: path.clone(),
                     line_number: i,

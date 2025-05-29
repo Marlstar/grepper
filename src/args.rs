@@ -17,6 +17,10 @@ pub struct Args {
     /// Search query
     pub query: String,
 
+    /// Match against anything that does NOT match the query
+    #[arg(short = 'v', default_value_t = false)]
+    pub invert: bool,
+
     /// Use regular expression
     #[arg(short, default_value_t = false)]
     pub regex: bool,
