@@ -10,11 +10,13 @@ pub fn recursive_grep() -> Result<Vec<Hit>, Error> {
     let mut hits: Vec<Hit> = vec![];
     for (path, file) in file_contents {
         for (i, line) in file.lines().enumerate() {
-            if line.contains(&crate::ARGS.query) {
+            if let Some(pos) = line.find(&crate::ARGS.query) {
+                let query_len = crate::ARGS.query.len();
                 hits.push(Hit {
                     file: path.clone(),
                     line_number: i,
                     line_content: line.to_string(),
+                    start_byte_idx: pos,
                 });
             }
         }
@@ -28,4 +30,5 @@ pub struct Hit {
     pub file: PathBuf,
     pub line_number: usize,
     pub line_content: String,
+    pub start_byte_idx: usize,
 }
