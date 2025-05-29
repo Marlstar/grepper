@@ -18,7 +18,7 @@ pub struct Args {
     pub query: String,
 
     /// Match against anything that does NOT match the query
-    #[arg(short = 'v', default_value_t = false)]
+    #[arg(short = 'v', long = "invert-match", default_value_t = false)]
     pub invert: bool,
 
     /// Use regular expression
