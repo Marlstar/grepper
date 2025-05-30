@@ -28,7 +28,7 @@ pub struct Args {
     pub invert: bool,
 
     /// Ignore letter case
-    #[arg(short = 'y', long = "ignore-case", default_value_t = false)]
+    #[arg(short = 'i', long = "ignore-case", default_value_t = false)]
     pub case_insensitive: bool,
 
     /// Use regular expression
