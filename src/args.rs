@@ -21,6 +21,10 @@ pub struct Args {
     #[arg(short = 'v', long = "invert-match", default_value_t = false)]
     pub invert: bool,
 
+    /// Ignore letter case
+    #[arg(short = 'y', long = "ignore-case", default_value_t = false)]
+    pub case_insensitive: bool,
+
     /// Use regular expression
     #[arg(short, default_value_t = false)]
     pub regex: bool,
