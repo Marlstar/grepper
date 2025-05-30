@@ -4,14 +4,14 @@ use crate::ARGS;
 use std::path::PathBuf;
 
 pub fn recursive_grep() -> Result<Vec<Hit>, Error> {
-    let files = files::all_files(&crate::CWD)?;
+    let files = files::all_files(&ARGS.path)?;
     // TODO: warn about files that failed to open?
     let file_contents = files.into_iter().map(|a| (a.clone(), files::file_content_string(&a).unwrap_or_default())).collect::<Vec<(PathBuf,String)>>();
 
     let mut hits: Vec<Hit> = vec![];
     for (path, file) in file_contents {
         for (i, line) in file.lines().enumerate() {
-            let pos = find(&line);
+            let pos = find(line);
 
             match (pos, ARGS.invert) {
                 (Some(p), false) => {

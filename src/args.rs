@@ -1,9 +1,11 @@
 use clap::Parser;
 use std::sync::LazyLock;
 use std::path::PathBuf;
+use std::ffi::OsStr;
 
 pub static ARGS: LazyLock<Args> = LazyLock::new(Args::parse);
 pub static CWD: LazyLock<PathBuf> = LazyLock::new(|| std::env::current_dir().unwrap());
+static BASE_OSSTR: LazyLock<String> = LazyLock::new(|| format!("{}", (*CWD).display()));
 
 #[derive(Parser, Debug)]
 #[command(
@@ -16,6 +18,10 @@ pub static CWD: LazyLock<PathBuf> = LazyLock::new(|| std::env::current_dir().unw
 pub struct Args {
     /// Search query
     pub query: String,
+
+    /// Path
+    #[arg(default_value = OsStr::new(&*BASE_OSSTR))]
+    pub path: PathBuf,
 
     /// Match against anything that does NOT match the query
     #[arg(short = 'v', long = "invert-match", default_value_t = false)]
